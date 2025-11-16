@@ -90,17 +90,23 @@ def tab_from_notes(note_list):
             continue
     return tab
 
-# PDF export
+# PDF export: Δημιουργεί αρχείο PDF με την τελετουργική ταμπλατούρα για τετράχορδο μπουζούκι
 def generate_pdf(tab):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="🎼 Τελετουργική Ταμπλατούρα", ln=True, align='C')
+    pdf = FPDF()  # Αρχικοποιεί το PDF αντικείμενο
+    pdf.add_page()  # Προσθέτει νέα σελίδα
+    pdf.set_font("Arial", size=12)  # Ορίζει γραμματοσειρά και μέγεθος
+
+    # Τίτλος της σελίδας (χωρίς emoji για αποφυγή σφάλματος encoding)
+    pdf.cell(200, 10, txt="Τελετουργική Ταμπλατούρα", ln=True, align='C')
+
+    # Για κάθε στοιχείο της ταμπλατούρας, δημιουργεί γραμμή με πληροφορίες
     for t in tab:
         line = f"{t['Νότα']} → Χορδή: {t['Χορδή']}, Τάστο: {t['Τάστο']}, Διάρκεια: {t['Διάρκεια']}"
-        pdf.cell(200, 10, txt=line, ln=True)
-    pdf.output("tab.pdf")
-    return "tab.pdf"
+        pdf.cell(200, 10, txt=line, ln=True)  # Προσθέτει τη γραμμή στο PDF
+
+    pdf.output("tab.pdf")  # Αποθηκεύει το αρχείο ως "tab.pdf"
+    return "tab.pdf"  # Επιστρέφει το όνομα του αρχείου
+
 
 # MIDI export
 def export_midi(tab, filename="output.mid"):
